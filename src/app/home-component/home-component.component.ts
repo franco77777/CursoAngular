@@ -15,7 +15,16 @@ export class HomeComponentComponent implements OnInit {
     private empleadoService: EmpleadosServicioDatosService //this.empleados = this.empleadoService.empleados;
   ) {} //aqui importamos el servicio global, aparentemente no es variable
   ngOnInit(): void {
-    this.empleados = this.empleadoService.empleados;
+    this.empleadoService //es como una promesa, para datos asincronos
+      .obtenerEmpleados()
+      .subscribe(
+        //injectamos los empleados de la base de datos
+        (misEmpleados) => {
+          this.empleados = Object.values(misEmpleados);
+        }
+      );
+
+    this.empleadoService.setEmpleados(this.empleados);
   }
   empleados: Empleado[] = [];
 

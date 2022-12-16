@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,8 @@ import { ProyectoComponentComponent } from './proyecto-component/proyecto-compon
 import { QuienesComponentComponent } from './quienes-component/quienes-component.component';
 import { ContactoComponentComponent } from './contacto-component/contacto-component.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ActualizaComponentComponent } from './actualiza-component/actualiza-component.component';
+import { dataServices } from './data.services';
 
 const appRoutes: Routes = [
   {
@@ -30,6 +33,10 @@ const appRoutes: Routes = [
     path: 'contacto',
     component: ContactoComponentComponent,
   },
+  {
+    path: 'actualiza/:id',
+    component: ActualizaComponentComponent,
+  },
 ];
 @NgModule({
   declarations: [
@@ -40,9 +47,19 @@ const appRoutes: Routes = [
     ProyectoComponentComponent,
     QuienesComponentComponent,
     ContactoComponentComponent,
+    ActualizaComponentComponent,
   ],
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(appRoutes)],
-  providers: [ServicioEmpleadosService, EmpleadosServicioDatosService],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes), // se importan las rutas creadas
+    HttpClientModule, //se importa para que funciones firebase
+  ],
+  providers: [
+    ServicioEmpleadosService,
+    EmpleadosServicioDatosService,
+    dataServices, //la clase para firebase
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
